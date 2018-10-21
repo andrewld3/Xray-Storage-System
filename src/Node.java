@@ -31,7 +31,7 @@ public class Node {
             return this;
         }
 
-        if(leaf == true) {      //If the key is not found and search hits a leaf, returns null. MUST CHECK FOR NULL!!
+        if(leaf) {      //If the key is not found and search hits a leaf, returns null. MUST CHECK FOR NULL!!
             return null;
         }
 
@@ -42,7 +42,7 @@ public class Node {
     public void insert(int k) {
         int i = numKeys - 1;    // Starts the index at the right most key
 
-        if(leaf == true) {
+        if(leaf) {
 
             while(i >= 0 && keys[i] > k) {  // Checks to make sure index doesn't go out of bounds and new key is less than current
                 keys[i+1] = keys[i];        // Shifts key over until index spot is open
@@ -70,34 +70,34 @@ public class Node {
         }
     }
 
-    private void split(int i, Node right) {
-        Node temp = new Node(right.t, right.leaf); // Copies the right child into what eventually will be the left child
+    private void split(int i, Node left) {
+        Node temp = new Node(left.t, left.leaf); // Copies the left child into what eventually will be the left child
         temp.numKeys = t - 1; //Because we are removing at least one node and placing it here.
 
-        for(int j = 0; j < numKeys; j++) {
-            right.keys[j] = right.keys[j+t];
+        for(int j = 0; j < numKeys; j++) {      //Shifting all of the keys to the right one
+            left.keys[j] = left.keys[j+t];
         }
 
-        if(right.leaf == false) {
+        if(!left.leaf) {         //Checks if child is not a leaf
             for(int j = 0; j < t; j++) {
-                temp.children[j] = right.children[j+t];
+                temp.children[j] = left.children[j+t];     // Moves 2 larger children from original node to new node.
             }
         }
 
-        right.numKeys = t - 1;
+        left.numKeys = t - 1;                  // Resets numChild counter to 1 as there is only one node left in here.
 
-        for(int j = numKeys - 1; j >= i; j--) {
-            children[j+1] = children[j];
+        for(int j = numKeys - 1; j >= i; j--) {         // Starts at greatest index, moves down from index by calling function
+            children[j+1] = children[j];                // Moves all children nodes one to the right.
         }
 
-        children[i + 1] = temp;
+        children[i + 1] = temp;        //Assigns the new node as that right child.
 
-        for(int j= numKeys; j >= i; j--) {
-            keys[j+1] = right.keys[t-1];
+        for(int j= numKeys - 1; j >= i; j--) {      // Starts at parent nodes highest key
+            keys[j+1] = keys[j];                    // Moves the keys one to the right
         }
 
-        keys[i] = right.keys[t-1];
+        keys[i] = left.keys[t-1];      //This moves the child middle key up to the parent node current index spot.
 
-        numKeys = numKeys + 1;
+        numKeys = numKeys + 1;      //This increases the numKeys of the parent node because of the move from the child node.
     }
 }

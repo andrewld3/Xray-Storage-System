@@ -13,8 +13,8 @@ Limitations:
 */
 public class Main {
 
-    public static final int H = 4;
-
+    public static final int D = 2;  // This is the minimum degrees per node that we'll use through the B-Tree.
+                                    // This must be changed and rebuilt if there needs to be more keys per node.
     public static void main(String[] args) {
         //TODO: Write Program Logic
         //TODO: Write File Input

@@ -74,20 +74,26 @@ public class Node {
         Node temp = new Node(right.t, right.leaf); // Copies the right child into what eventually will be the left child
         temp.numKeys = t - 1; //Because we are removing at least one node and placing it here.
 
-        for(int j = 0; j < numKeys; j++) { 
+        for(int j = 0; j < numKeys; j++) {
             right.keys[j] = right.keys[j+t];
         }
 
         if(right.leaf == false) {
             for(int j = 0; j < t; j++) {
-                right.children[j] = right.children[j+t];
+                temp.children[j] = right.children[j+t];
             }
         }
 
         right.numKeys = t - 1;
 
         for(int j = numKeys - 1; j >= i; j--) {
-            keys[j+1] = keys[j];
+            children[j+1] = children[j];
+        }
+
+        children[i + 1] = temp;
+
+        for(int j= numKeys; j >= i; j--) {
+            keys[j+1] = right.keys[t-1];
         }
 
         keys[i] = right.keys[t-1];

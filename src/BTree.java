@@ -11,7 +11,7 @@ public class BTree {
     }
 
     //TODO: Write Add Node
-    public void insertNode(int key) {
+    public void insertNode(long key) {
         if(root == null) {
             root = new Node(t, true); // Makes the root with degrees from constant and makes root a leaf.
             root.keys[0] = key; // Assigns the key to the node.
@@ -35,7 +35,7 @@ public class BTree {
     }
 
     //TODO: Search
-    public Node search(int key) {
+    public Node search(long key) {
         if(root == null) { // Checks if the BTree exists and has at least one key
             return null;
         } else {

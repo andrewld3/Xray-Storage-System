@@ -2,7 +2,7 @@ public class Node {
 
     //TODO: Write Node Structure
     int numKeys;                            //Num keys currently stored in node
-    int keys[];                             //Pointer to each key inside node
+    long keys[];                             //Pointer to each key inside node
     Node children[];                         //Pointer to each child node: 0 < first key, 1 > first key, < 2nd key, etc...
     boolean leaf;                           //True- leaf node, False, inside node
     int t;                                  //Minimum Degree
@@ -14,13 +14,13 @@ public class Node {
         t = d;  //Sets min num nodes
         leaf = l; //Sets leaf value
 
-        keys = new int[2*t-1];      //Instantiates key array with size 2 * degrees - 1
+        keys = new long[2*t-1];      //Instantiates key array with size 2 * degrees - 1
         children = new Node[2*t];   //Instantiates children nodes with size 2 * degrees
 
         numKeys = 0;                //Sets current number of keys as 0
     }
 
-    public Node search(int k) {
+    public Node search(long k) {
         int i = 0;  // This is used to find the index of the array needed for search
 
         while(i < numKeys && k > keys[i]){ //Looks for the key that is greater than or equal to k
@@ -39,7 +39,7 @@ public class Node {
                                         //then returns either null or the Node all the way back up to the calling function.
     }
 
-    public void insert(int k) {
+    public void insert(long k) {
         int i = numKeys - 1;    // Starts the index at the right most key
 
         if(leaf) {

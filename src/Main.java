@@ -5,7 +5,7 @@ CSC 365- B Tree Implementation of X-ray Storage System
 Arguments: None
 
 Limitations:
-- Tree must be of defined height set in Global Variable.
+- Tree must be of defined degree set in Global Variable.
 - Tree is NOT persistent.
 - Tree is NOT generic.
 - Search is limited to the format "xxxxxxxmmddyyhhmmss"

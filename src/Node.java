@@ -70,7 +70,7 @@ public class Node {
         }
     }
 
-    private void split(int i, Node left) {
+    public void split(int i, Node left) {
         Node temp = new Node(left.t, left.leaf); // Copies the left child into what eventually will be the left child
         temp.numKeys = t - 1; //Because we are removing at least one node and placing it here.
 

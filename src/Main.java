@@ -32,11 +32,9 @@ public class Main {
 
         BTree tree = new BTree(D);
 
-        fileGeneration();
+        //fileGeneration();
 
-        loadTree(tree);
-
-        parser();
+        parser(tree);
 
     }
 
@@ -44,7 +42,7 @@ public class Main {
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(LINUX));
 
-        for(int i = 0; i < 50000; i++) {
+        for(int i = 0; i < 14; i++) {
             fileNameGenerator(writer);
         }
 
@@ -120,7 +118,7 @@ public class Main {
         return r.nextInt((max - min) + 1) + min;
     }
 
-    public static void parser( ) throws IOException {
+    public static void parser(BTree tree) throws IOException {
 
         //TODO: Write File Name Parser
         String fileName;
@@ -129,19 +127,14 @@ public class Main {
 
         while(in.hasNext()) {
             fileName = in.nextLine();
-            String[] output = fileName.split("\\.");
+            //String[] output = fileName.split("\\.");
+            loadTree(tree, fileName);
         }
     }
 
-    public static void loadTree(BTree tree) throws IOException {
+    public static void loadTree(BTree tree, String fileName) throws IOException {
 
         //TODO: Write Data entry function
-        String fileName;
-        Scanner in = new Scanner(new File(LINUX));
-
-        while(in.hasNext()) {
-            fileName = in.nextLine();
-            tree.insertNode(Long.parseLong(fileName));
-        }
+        tree.insertNode(Long.parseLong(fileName));
     }
 }

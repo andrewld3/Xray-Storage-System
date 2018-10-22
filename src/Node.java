@@ -36,7 +36,7 @@ public class Node {
         }
 
         return children[i].search(k);   //Recursively searches through the tree until the conditions above are met
-                                        //then returns either null or the Node all the way back up to the calling function.
+        //then returns either null or the Node all the way back up to the calling function.
     }
 
     public void insert(long k) {
@@ -74,8 +74,8 @@ public class Node {
         Node temp = new Node(left.t, left.leaf); // Copies the left child into what eventually will be the left child
         temp.numKeys = t - 1; //Because we are removing at least one node and placing it here.
 
-        for(int j = 0; j < numKeys; j++) {      //Shifting all of the keys to the right one
-            left.keys[j] = left.keys[j+t];
+        for(int j = 0; j < t -1; j++) {      //Shifting all of the keys to the right one
+            temp.keys[j] = left.keys[j+t];
         }
 
         if(!left.leaf) {         //Checks if child is not a leaf
@@ -86,7 +86,7 @@ public class Node {
 
         left.numKeys = t - 1;                  // Resets numChild counter to 1 as there is only one node left in here.
 
-        for(int j = numKeys - 1; j >= i; j--) {         // Starts at greatest index, moves down from index by calling function
+        for(int j = numKeys - 1; j >= i+1; j--) {         // Starts at greatest index, moves down from index by calling function
             children[j+1] = children[j];                // Moves all children nodes one to the right.
         }
 

@@ -15,7 +15,7 @@ public class BTree {
         if(root == null) {
             root = new Node(t, true); // Makes the root with degrees from constant and makes root a leaf.
             root.keys[0] = key; // Assigns the key to the node.
-            root.numKeys++; // Adds one to numKeys.
+            root.numKeys = 1; // Sets numKeys to 1.
         } else {  // This is if the root is not null.
             if(root.numKeys == 2*t-1) { // If the root is full.
                 Node temp = new Node(t, false); // Because temp is going to be the new root, we are setting it as false
@@ -30,6 +30,8 @@ public class BTree {
                 temp.children[i].insert(key); // Inserts the key.
 
                 root = temp; // Reassigns the root.
+            } else {
+                root.insert(key);
             }
         }
     }

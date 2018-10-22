@@ -1,20 +1,16 @@
 public class Data {
 
-    int[] codes;
-    int numFiles;
+    int code;
 
-    public Data(int n) {
-        codes = new int[n];
+    public Data() {
+
     }
 
-    public void addCode(int i, int c) {
-        codes[i] = c;
-        numFiles++;
+    public void addCode(int c) {
+        code = c;
     }
 
     public void displayCode( ) {
-        for(int i = 0; i < numFiles; i++) {
-            System.out.println();
-        }
+        System.out.println(code);
     }
 }

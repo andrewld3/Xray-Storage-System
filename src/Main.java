@@ -26,7 +26,7 @@ public class Main {
     // This must be changed and rebuilt if there needs to be more keys per node.
 
     public static final String WINDOWS = "C:\\Users\\Andrew\\Code\\Xray-Storage-System\\xrayfiles.txt";
-    public static final String LINUX = "/home/andrew/Code/csc365/xrayBTree_Driscoll/xrayfiles.txt";
+    public static final String LINUX = "/home/andrew/Code/csc365/Xray-Storage-System/xrayfiles.txt";
 
     public static void main(String[] args) throws IOException {
 
@@ -41,10 +41,10 @@ public class Main {
     }
 
     public static void fileGeneration( ) throws IOException {
-        //TODO: Write File Name Generator
+
         BufferedWriter writer = new BufferedWriter(new FileWriter(LINUX));
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 50000; i++) {
             fileNameGenerator(writer);
         }
 
@@ -135,7 +135,7 @@ public class Main {
 
     public static void loadTree(BTree tree) throws IOException {
 
-        //TODO: Write File Input
+        //TODO: Write Data entry function
         String fileName;
         Scanner in = new Scanner(new File(LINUX));
 

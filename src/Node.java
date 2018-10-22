@@ -1,13 +1,14 @@
+import java.util.ArrayList;
+
 public class Node {
 
-    //TODO: Write Node Structure
     int numKeys;                            //Num keys currently stored in node
     long keys[];                             //Pointer to each key inside node
     Node children[];                         //Pointer to each child node: 0 < first key, 1 > first key, < 2nd key, etc...
     boolean leaf;                           //True- leaf node, False, inside node
     int t;                                  //Minimum Degree
+    ArrayList<Data> data;
 
-    //TODO: Write Node Operations
     //Constructor
     //Parameters: d is degree, l is leaf boolean value
     public Node (int d, boolean l) {
@@ -18,6 +19,9 @@ public class Node {
         children = new Node[2*t];   //Instantiates children nodes with size 2 * degrees
 
         numKeys = 0;                //Sets current number of keys as 0
+
+        data = new ArrayList<>();
+        //TODO: Write Add Data Function
     }
 
     public Node search(long k) {

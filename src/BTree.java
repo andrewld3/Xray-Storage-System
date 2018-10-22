@@ -10,7 +10,6 @@ public class BTree {
         t = d;          //Sets the min degrees to t.
     }
 
-    //TODO: Write Add Node
     public void insertNode(long key) {
         if(root == null) {
             root = new Node(t, true); // Makes the root with degrees from constant and makes root a leaf.
@@ -36,7 +35,6 @@ public class BTree {
         }
     }
 
-    //TODO: Search
     public Node search(long key) {
         if(root == null) { // Checks if the BTree exists and has at least one key
             return null;

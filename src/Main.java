@@ -30,24 +30,25 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        BTree tree = new BTree(D);
+        BTree tree = new BTree(D);  // Instantiates the a new B-Tree with minimum degrees
 
-        //fileGeneration();
+        //fileGeneration(1); // Generates a file with an argument of the number of files to be generated.
 
-        parser(tree);
+        parser(tree); // Parses the file and then loads the tree.
 
         //Test Code
         Node searched;
-        searched = tree.search(7557243122213114113L);
+        searched = tree.search(6986961120559204343L);
+        System.out.print(searched.index + " ");
+        System.out.println(searched.keys[searched.index]);
         searched.displayData(searched.index);
-
     }
 
-    public static void fileGeneration( ) throws IOException {
+    public static void fileGeneration(int n) throws IOException {
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(WINDOWS));
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < n; i++) {
             fileNameGenerator(writer);
         }
 
@@ -61,12 +62,15 @@ public class Main {
         int fh;  // First Hour
         int fmi; // First Minute
         int fs;  // First Second
-        String filenameCreator = Integer.toString(getRandomNumber(1,8)); // Patient Number
+
+        // Generates Patient Number
+        String filenameCreator = Integer.toString(getRandomNumber(1,8));
 
         for(int i = 0; i < 6; i++) {
-            filenameCreator = filenameCreator + getRandomNumber(0, 9); // Patient Number
+            filenameCreator = filenameCreator + getRandomNumber(0, 9);
         }
 
+        // Generates the Month
         fm = getRandomNumber(0,1);
         filenameCreator = filenameCreator + fm;
         if(fm == 0) {
@@ -75,6 +79,7 @@ public class Main {
             filenameCreator = filenameCreator + getRandomNumber(0,2);
         }
 
+        // Generates the Day
         fd = getRandomNumber(0,2);
         filenameCreator = filenameCreator + fd;
         if(fd == 0) {
@@ -83,6 +88,7 @@ public class Main {
             filenameCreator = filenameCreator + getRandomNumber(0,9);
         }
 
+        // Generates the Year
         fy = getRandomNumber(0,9);
         filenameCreator = filenameCreator + fy;
         if(fy == 0) {
@@ -91,6 +97,7 @@ public class Main {
             filenameCreator = filenameCreator + getRandomNumber(0,9);
         }
 
+        // Generates the Hour
         fh = getRandomNumber(0,2);
         filenameCreator = filenameCreator + fh;
         if(fh == 2) {
@@ -99,22 +106,26 @@ public class Main {
             filenameCreator = filenameCreator + getRandomNumber(0,9);
         }
 
+        // Generates the Minutes
         fmi = getRandomNumber(0,5);
         filenameCreator = filenameCreator + fmi;
         filenameCreator = filenameCreator + getRandomNumber(0,9);
 
+        // Generates the Seconds
         fs = getRandomNumber(0,5);
         filenameCreator = filenameCreator + fs;
         filenameCreator = filenameCreator + getRandomNumber(0,9);
 
-
+        // Adds the .
         filenameCreator = filenameCreator + ".";
 
         String baseFileName = filenameCreator;
 
+        // Randomly chooses a number between 2 and 99 which dictates the amount of .ccccccc files per id.
         for(int i = 0; i < getRandomNumber(2,99); i++) {
+            // Generates the ccccccc of the file name
             for(int j = 0; j < 7; j++) {
-                filenameCreator = filenameCreator + getRandomNumber(0,9);
+                filenameCreator = filenameCreator + getRandomNumber(1,9);
             }
             writer.write(filenameCreator);
             writer.write("\n");
@@ -130,7 +141,6 @@ public class Main {
 
     public static void parser(BTree tree) throws IOException {
 
-        //TODO: Write File Name Parser
         String fileName;
 
         Scanner in = new Scanner(new File(WINDOWS));
@@ -146,10 +156,13 @@ public class Main {
 
         Node input;
 
-        if (tree.search(Long.parseLong(output[0])) == null) {
+        if (tree.search(Long.parseLong(output[0])) == null) { // If the search is null, adds the file name to node.
             tree.insertNode(Long.parseLong(output[0]));
-        } else {
             input = tree.search(Long.parseLong(output[0]));
+            input.addData(Integer.parseInt(output[1]), input.index);
+
+        } else {
+            input = tree.search(Long.parseLong(output[0])); // If the search returns a node, adds the .ccccccc to the data node
             input.addData(Integer.parseInt(output[1]), input.index);
         }
     }

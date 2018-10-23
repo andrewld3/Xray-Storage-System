@@ -35,15 +35,16 @@ public class Node {
             return this;
         }
 
-        if(leaf) {      //If the key is not found and search hits a leaf, returns null. MUST CHECK FOR NULL!!
+        if(leaf == true) {      //If the key is not found and search hits a leaf, returns null. MUST CHECK FOR NULL!!
             return null;
         }
 
         return children[i].search(k);   //Recursively searches through the tree until the conditions above are met
-        //then returns either null or the Node all the way back up to the calling function.
+                                        //then returns either null or the Node all the way back up to the calling function.
     }
 
     public void insert(long k) {
+
         int i = numKeys - 1;    // Starts the index at the right most key
 
         if(leaf) {
@@ -54,7 +55,7 @@ public class Node {
             }
 
             keys[i+1] = k;    // Because of decrement at left end (-1), the insertion needs to be at index + 1 spot.
-            numKeys = numKeys +1;   // Increases the keys
+            numKeys = numKeys + 1;   // Increases the keys
         } else {    // When node is not a leaf
 
             while(i >= 0 && keys[i] > k) { // Does the same check as above to find the index need for child
@@ -75,6 +76,7 @@ public class Node {
     }
 
     public void split(int i, Node left) {
+
         Node temp = new Node(left.t, left.leaf); // Copies the left child into what eventually will be the left child
         temp.numKeys = t - 1; //Because we are removing at least one node and placing it here.
 
@@ -90,7 +92,7 @@ public class Node {
 
         left.numKeys = t - 1;                  // Resets numChild counter to 1 as there is only one node left in here.
 
-        for(int j = numKeys - 1; j >= i+1; j--) {         // Starts at greatest index, moves down from index by calling function
+        for(int j = numKeys; j >= i+1; j--) {         // Starts at greatest index, moves down from index by calling function
             children[j+1] = children[j];                // Moves all children nodes one to the right.
         }
 
@@ -103,5 +105,11 @@ public class Node {
         keys[i] = left.keys[t-1];      //This moves the child middle key up to the parent node current index spot.
 
         numKeys = numKeys + 1;      //This increases the numKeys of the parent node because of the move from the child node.
+    }
+
+    public void addData(int code) {
+        Data temp = new Data();
+        temp.addCode(code);
+        data.add(temp);
     }
 }

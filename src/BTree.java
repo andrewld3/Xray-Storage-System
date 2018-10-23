@@ -11,6 +11,7 @@ public class BTree {
     }
 
     public void insertNode(long key) {
+
         if(root == null) {
             root = new Node(t, true); // Makes the root with degrees from constant and makes root a leaf.
             root.keys[0] = key; // Assigns the key to the node.

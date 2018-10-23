@@ -32,17 +32,22 @@ public class Main {
 
         BTree tree = new BTree(D);
 
-        fileGeneration();
+        //fileGeneration();
 
         parser(tree);
+
+        //Test Code
+        Node searched;
+        searched = tree.search(7557243122213114113L);
+        searched.displayData(searched.index);
 
     }
 
     public static void fileGeneration( ) throws IOException {
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(LINUX));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(WINDOWS));
 
-        for(int i = 0; i < 50000; i++) {
+        for(int i = 0; i < 10; i++) {
             fileNameGenerator(writer);
         }
 
@@ -56,7 +61,7 @@ public class Main {
         int fh;  // First Hour
         int fmi; // First Minute
         int fs;  // First Second
-        String filenameCreator = Integer.toString(getRandomNumber(0,8)); // Patient Number
+        String filenameCreator = Integer.toString(getRandomNumber(1,8)); // Patient Number
 
         for(int i = 0; i < 6; i++) {
             filenameCreator = filenameCreator + getRandomNumber(0, 9); // Patient Number
@@ -105,11 +110,16 @@ public class Main {
 
         filenameCreator = filenameCreator + ".";
 
-        for(int i = 0; i < 7; i++) {
-            filenameCreator = filenameCreator + getRandomNumber(0,9);
+        String baseFileName = filenameCreator;
+
+        for(int i = 0; i < getRandomNumber(2,99); i++) {
+            for(int j = 0; j < 7; j++) {
+                filenameCreator = filenameCreator + getRandomNumber(0,9);
+            }
+            writer.write(filenameCreator);
+            writer.write("\n");
+            filenameCreator = baseFileName;
         }
-        writer.write(filenameCreator);
-        writer.write("\n");
     }
 
     private static int getRandomNumber(int min, int max) {
@@ -123,7 +133,7 @@ public class Main {
         //TODO: Write File Name Parser
         String fileName;
 
-        Scanner in = new Scanner(new File(LINUX));
+        Scanner in = new Scanner(new File(WINDOWS));
 
         while(in.hasNext()) {
             fileName = in.nextLine();
@@ -140,7 +150,7 @@ public class Main {
             tree.insertNode(Long.parseLong(output[0]));
         } else {
             input = tree.search(Long.parseLong(output[0]));
-            input.addData(Integer.parseInt(output[1]));
+            input.addData(Integer.parseInt(output[1]), input.index);
         }
     }
 }

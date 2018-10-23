@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Node {
 
@@ -7,7 +8,11 @@ public class Node {
     Node children[];                         //Pointer to each child node: 0 < first key, 1 > first key, < 2nd key, etc...
     boolean leaf;                           //True- leaf node, False, inside node
     int t;                                  //Minimum Degree
+    List<Data>[] indexData = new List[5];
     ArrayList<Data> data;
+
+    int index; // Used for Search
+    int current; // Used for ArrayList
 
     //Constructor
     //Parameters: d is degree, l is leaf boolean value
@@ -19,23 +24,26 @@ public class Node {
         children = new Node[2*t];   //Instantiates children nodes with size 2 * degrees
 
         numKeys = 0;                //Sets current number of keys as 0
+        current = 0;
 
-        data = new ArrayList<>();
-        //TODO: Write Add Data Function
+        for(int i = 0; i < 5; i++) {
+            indexData[i] = new ArrayList<>();
+        }
     }
 
     public Node search(long k) {
         int i = 0;  // This is used to find the index of the array needed for search
 
-        while(i < numKeys && k > keys[i]){ //Looks for the key that is greater than or equal to k
+        while(i < numKeys - 1 && k > keys[i]){ //Looks for the key that is greater than or equal to k
             i++;
         }
 
         if(keys[i] == k) {      //If the key is found, returns the node
+            index = i;
             return this;
         }
 
-        if(leaf == true) {      //If the key is not found and search hits a leaf, returns null. MUST CHECK FOR NULL!!
+        if(leaf) {      //If the key is not found and search hits a leaf, returns null. MUST CHECK FOR NULL!!
             return null;
         }
 
@@ -58,7 +66,7 @@ public class Node {
             numKeys = numKeys + 1;   // Increases the keys
         } else {    // When node is not a leaf
 
-            while(i >= 0 && keys[i] > k) { // Does the same check as above to find the index need for child
+            while(i >= 1 && keys[i] > k) { // Does the same check as above to find the index need for child
                 i--;
             }
 
@@ -107,9 +115,21 @@ public class Node {
         numKeys = numKeys + 1;      //This increases the numKeys of the parent node because of the move from the child node.
     }
 
-    public void addData(int code) {
+    public void addData(int code, int index) {
         Data temp = new Data();
         temp.addCode(code);
-        data.add(temp);
+        indexData[index].add(current, temp);
+        current++;
+    }
+
+    public void displayData(int index) {
+        Data temp = new Data();
+        int size;
+        size = indexData[index].size();
+        for(int i = 0; i < size; i++) {
+            System.out.println("I'm Here");
+            temp = indexData[index].get(i);
+            temp.displayCode();
+        }
     }
 }

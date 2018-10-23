@@ -12,7 +12,6 @@ public class Node {
     ArrayList<Data> data;
 
     int index; // Used for Search
-    int[] current; // Used for ArrayList
 
     //Constructor
     //Parameters: d is degree, l is leaf boolean value
@@ -24,7 +23,6 @@ public class Node {
         children = new Node[2*t];   //Instantiates children nodes with size 2 * degrees
 
         numKeys = 0;                //Sets current number of keys as 0
-        current = new int[5];
 
         for(int i = 0; i < 5; i++) {
             indexData[i] = new ArrayList<>();
@@ -118,17 +116,16 @@ public class Node {
     public void addData(int code, int index) {
         Data temp = new Data();
         temp.addCode(code);
-        indexData[index].add(current[index], temp);
-        current[index]++;
+        indexData[index].add(temp);
     }
 
     public void displayData(int index) {
-        Data temp = new Data();
-        int size;
-        size = indexData[index].size();
-        for(int i = 0; i < size; i++) {
+        Data temp;
+        int i = 0;
+        while(indexData[index].size() > i) {
             temp = indexData[index].get(i);
             temp.displayCode();
+            i++;
         }
     }
 }

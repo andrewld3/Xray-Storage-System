@@ -32,21 +32,14 @@ public class Main {
 
         BTree tree = new BTree(D);  // Instantiates the a new B-Tree with minimum degrees
 
-        //fileGeneration(1); // Generates a file with an argument of the number of files to be generated.
+        fileGeneration(6); // Generates a file with an argument of the number of files to be generated.
 
         parser(tree); // Parses the file and then loads the tree.
-
-        //Test Code
-        Node searched;
-        searched = tree.search(6986961120559204343L);
-        System.out.print(searched.index + " ");
-        System.out.println(searched.keys[searched.index]);
-        searched.displayData(searched.index);
     }
 
     public static void fileGeneration(int n) throws IOException {
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(WINDOWS));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(LINUX));
 
         for(int i = 0; i < n; i++) {
             fileNameGenerator(writer);
@@ -143,7 +136,7 @@ public class Main {
 
         String fileName;
 
-        Scanner in = new Scanner(new File(WINDOWS));
+        Scanner in = new Scanner(new File(LINUX));
 
         while(in.hasNext()) {
             fileName = in.nextLine();

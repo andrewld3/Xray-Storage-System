@@ -1,15 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Node {
 
     int numKeys;                            //Num keys currently stored in node
-    long keys[];                             //Pointer to each key inside node
+    Key keys[];                             //Pointer to each key inside node
     Node children[];                         //Pointer to each child node: 0 < first key, 1 > first key, < 2nd key, etc...
     boolean leaf;                           //True- leaf node, False, inside node
     int t;                                  //Minimum Degree
-    List<Data>[] indexData = new List[5];
-    ArrayList<Data> data;
 
     int index; // Used for Search
 
@@ -19,24 +14,20 @@ public class Node {
         t = d;  //Sets min num nodes
         leaf = l; //Sets leaf value
 
-        keys = new long[2*t-1];      //Instantiates key array with size 2 * degrees - 1
+        keys = new Key[2*t-1];      //Instantiates key array with size 2 * degrees - 1
         children = new Node[2*t];   //Instantiates children nodes with size 2 * degrees
 
         numKeys = 0;                //Sets current number of keys as 0
-
-        for(int i = 0; i < 5; i++) {
-            indexData[i] = new ArrayList<>();
-        }
     }
 
     public Node search(long k) {
         int i = 0;  // This is used to find the index of the array needed for search
 
-        while(i < numKeys - 1 && k > keys[i]){ //Looks for the key that is greater than or equal to k
+        while(i < numKeys && k > keys[i].getKey()){ //Looks for the key that is greater than or equal to k
             i++;
         }
 
-        if(keys[i] == k) {      //If the key is found, returns the node
+        if(i != numKeys && keys[i].getKey() == k) {      //If the key is found, returns the node
             index = i;
             return this;
         }
@@ -49,13 +40,13 @@ public class Node {
                                         //then returns either null or the Node all the way back up to the calling function.
     }
 
-    public void insert(long k) {
+    public void insert(Key k) {
 
         int i = numKeys - 1;    // Starts the index at the right most key
 
         if(leaf) {
 
-            while(i >= 0 && keys[i] > k) {  // Checks to make sure index doesn't go out of bounds and new key is less than current
+            while(i >= 0 && keys[i].getKey() > k.getKey()) {  // Checks to make sure index doesn't go out of bounds and new key is less than current
                 keys[i+1] = keys[i];        // Shifts key over until index spot is open
                 i--;
             }
@@ -64,7 +55,7 @@ public class Node {
             numKeys = numKeys + 1;   // Increases the keys
         } else {    // When node is not a leaf
 
-            while(i >= 1 && keys[i] > k) { // Does the same check as above to find the index need for child
+            while(i >= 0 && keys[i].getKey() > k.getKey()) { // Does the same check as above to find the index need for child
                 i--;
             }
 
@@ -72,11 +63,10 @@ public class Node {
 
                 split(i+1, children[i+1]); // Splits if full
 
-                if(keys[i+1] < k) { // Because of the split, there is a possibility of larger key, we check for if the insertion index is still smaller
+                if(keys[i+1].getKey() < k.getKey()) { // Because of the split, there is a possibility of larger key, we check for if the insertion index is still smaller
                     i++;
                 }
             }
-
             children[i+1].insert(k); // Finally, we get to insert at the correct child node.
         }
     }
@@ -113,19 +103,24 @@ public class Node {
         numKeys = numKeys + 1;      //This increases the numKeys of the parent node because of the move from the child node.
     }
 
-    public void addData(int code, int index) {
-        Data temp = new Data();
-        temp.addCode(code);
-        indexData[index].add(temp);
+    public void addData(Data d) {
+        keys[index].addCode(d);
     }
 
     public void displayData(int index) {
-        Data temp;
+        keys[index].displayCode();
+    }
+
+    public void displayTree( ) {
         int i = 0;
-        while(indexData[index].size() > i) {
-            temp = indexData[index].get(i);
-            temp.displayCode();
-            i++;
+        for(i = 0; i < numKeys; i++) {
+            if(!leaf) {
+                children[i].displayTree();
+            }
+            System.out.println(keys[i].getKey());
+        }
+        if(!leaf) {
+            children[i].displayTree();
         }
     }
 }

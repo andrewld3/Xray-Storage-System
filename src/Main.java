@@ -29,17 +29,65 @@ public class Main {
     public static final String LINUX = "/home/andrew/Code/csc365/Xray-Storage-System/xrayfiles.txt";
 
     public static void main(String[] args) throws IOException {
-
+        int option = 0;
+        Scanner in = new Scanner(System.in);
         BTree tree = new BTree(D);  // Instantiates the a new B-Tree with minimum degrees
 
-        fileGeneration(6); // Generates a file with an argument of the number of files to be generated.
+        while(option != 5) {
+            System.out.println();
+            System.out.println("1) Generate and Load File");
+            System.out.println("2) Populate B-Tree");
+            System.out.println("3) Search for Key");
+            System.out.println("4) Display Files");
+            System.out.println("5) Exit");
+            System.out.print("Enter Command: ");
+            option = in.nextInt();
+            System.out.println();
+            switch(option) {
+                case 1:
+                    fileGeneration(5000); // Generates a file with an argument of the number of files to be generated.
+                    break;
+                case 2:
+                    parser(tree); // Parses the file and then loads the tree.
+                    break;
+                case 3:
+                    long searchTerm;
+                    Node searchedNode;
+                    System.out.println("Search for (xxxxxxxMMDDYYHHMMSS): ");
+                    searchTerm = in.nextLong();
+                    searchedNode = tree.search(searchTerm);
+                    if(searchedNode != null && searchedNode.keys[searchedNode.index].getKey() == searchTerm) {
+                        System.out.println("These files exist in the tree");
+                    } else {
+                        System.out.println("These files do not exist in the tree");
+                    }
+                    break;
+                case 4:
+                    long search;
+                    Node searched;
+                    System.out.println("Search for (xxxxxxxMMDDYYHHMMSS): ");
+                    search = in.nextLong();
+                    searched = tree.search(search);
+                    if(searched != null && searched.keys[searched.index].getKey() == search) {
+                        searched.displayData(searched.index);
+                    } else {
+                        System.out.println("These files do not exist in the tree");
+                    }
+                    break;
 
-        parser(tree); // Parses the file and then loads the tree.
+                case 5:
+                    System.out.println("Entire Tree in Numerical Order");
+                    tree.displayTree();
+                    break;
+                default:
+                    System.out.println("Incorrect Command\n");
+            }
+        }
     }
 
     public static void fileGeneration(int n) throws IOException {
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(LINUX));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(WINDOWS));
 
         for(int i = 0; i < n; i++) {
             fileNameGenerator(writer);
@@ -136,7 +184,7 @@ public class Main {
 
         String fileName;
 
-        Scanner in = new Scanner(new File(LINUX));
+        Scanner in = new Scanner(new File(WINDOWS));
 
         while(in.hasNext()) {
             fileName = in.nextLine();
@@ -146,17 +194,21 @@ public class Main {
     }
 
     public static void loadTree(BTree tree, String[] output) throws IOException {
-
+        Key inputKey = new Key();
         Node input;
+        Data inputData = new Data();
 
         if (tree.search(Long.parseLong(output[0])) == null) { // If the search is null, adds the file name to node.
-            tree.insertNode(Long.parseLong(output[0]));
+            inputKey.addKey(Long.parseLong(output[0]));
+            tree.insertNode(inputKey);
             input = tree.search(Long.parseLong(output[0]));
-            input.addData(Integer.parseInt(output[1]), input.index);
+            inputData.addCode(Integer.parseInt(output[1]));
+            input.addData(inputData);
 
         } else {
-            input = tree.search(Long.parseLong(output[0])); // If the search returns a node, adds the .ccccccc to the data node
-            input.addData(Integer.parseInt(output[1]), input.index);
+            input = tree.search(Long.parseLong(output[0]));
+            inputData.addCode(Integer.parseInt(output[1]));
+            input.addData(inputData);
         }
     }
 }

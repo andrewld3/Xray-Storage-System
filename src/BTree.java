@@ -10,7 +10,7 @@ public class BTree {
         t = d;          //Sets the min degrees to t.
     }
 
-    public void insertNode(long key) {
+    public void insertNode(Key key) {
 
         if(root == null) {
             root = new Node(t, true); // Makes the root with degrees from constant and makes root a leaf.
@@ -23,7 +23,7 @@ public class BTree {
                 temp.split(0, root); // Splits the full child (prev. root)
 
                 int i = 0;
-                if(temp.keys[0] < key) { // This increases the index by one if the key is greater than the lowest key of root.
+                if(temp.keys[0].getKey() < key.getKey()) { // This increases the index by one if the key is greater than the lowest key of root.
                     i++;
                 }
 
@@ -41,6 +41,12 @@ public class BTree {
             return null;
         } else {
             return root.search(key); // Recursive function in Node. CHECK FOR NULL!!
+        }
+    }
+
+    public void displayTree( ) {
+        if(root != null) {
+            root.displayTree();
         }
     }
 }

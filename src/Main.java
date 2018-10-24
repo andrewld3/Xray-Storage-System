@@ -10,6 +10,7 @@ Limitations:
 - Tree is NOT generic.
 - Search is limited to the format "xxxxxxxmmddyyhhmmss"
 - Application is a command-line implementation.
+- The file "xrayfiles.txt" must exist in the project directory.
 */
 
 import java.io.BufferedWriter;
